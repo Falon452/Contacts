@@ -6,12 +6,21 @@ import javax.inject.Inject
 
 internal class ContactMapper @Inject constructor() {
 
-    fun from(contactResponse: ContactResponse): Contact =
+    fun from(contactResponse: ContactResponse): Contact? =
         with(contactResponse) {
-            Contact(
-                firstName = firstName,
-                lastName = lastName,
-                email = email,
-            )
+            when {
+                firstName?.isNotBlank() == true && lastName?.isNotBlank() == true -> {
+                    Contact.FullNameContact(
+                        firstName = firstName,
+                        lastName = lastName,
+                    )
+                }
+                email?.isNotBlank() == true -> {
+                    Contact.EmailContact(
+                        email = email,
+                    )
+                }
+                else -> null
+            }
         }
 }

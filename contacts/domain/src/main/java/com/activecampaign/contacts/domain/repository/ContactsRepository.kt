@@ -6,5 +6,5 @@ import com.activecampaign.contacts.domain.model.Order
 
 interface ContactsRepository {
 
-    suspend fun getContacts(limit: Int, ordering: Map<ContactField, Order>): List<Contact>
+    suspend fun getContacts(limit: Int, ordering: Map<ContactField, Order>): Result<List<Contact>>
 }

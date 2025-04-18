@@ -8,7 +8,9 @@ class ContactsViewStateMapper @Inject constructor() {
 
     fun from(state: ContactsState): ContactsViewState = with(state) {
         ContactsViewState(
-            contacts = state.contacts,
+            contacts = state.contacts ?: emptyList(),
+            showSpinner = state.contacts == null,
+            showListEmptyImage = state.contacts?.isEmpty() == true
         )
     }
 }

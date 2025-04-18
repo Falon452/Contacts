@@ -14,5 +14,4 @@ fun ContactsScreen(
 ) {
     val state by viewModel.viewState.collectAsState()
     Text(state.contacts.toString())
-
 }

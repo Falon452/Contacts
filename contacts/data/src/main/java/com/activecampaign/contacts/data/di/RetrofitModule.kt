@@ -1,5 +1,6 @@
 package com.activecampaign.contacts.data.di
 
+import com.activecampaign.contacts.data.BuildConfig
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,7 +25,7 @@ internal object RetrofitModule {
     @Provides
     fun provideApiKeyInterceptor(): Interceptor = Interceptor { chain ->
         val request = chain.request().newBuilder()
-            .addHeader("Api-Token", "XXXXXXXXXXX")
+            .addHeader("Api-Token", BuildConfig.API_KEY)
             .build()
         chain.proceed(request)
     }

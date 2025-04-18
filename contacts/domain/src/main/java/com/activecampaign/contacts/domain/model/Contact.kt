@@ -1,7 +1,14 @@
 package com.activecampaign.contacts.domain.model
 
-data class Contact(
-    val firstName: String?,
-    val lastName: String?,
-    val email: String?,
-)
+
+sealed class Contact {
+
+    data class FullNameContact(
+        val firstName: String,
+        val lastName: String,
+    ) : Contact()
+
+    data class EmailContact(
+        val email: String,
+    ) : Contact()
+}

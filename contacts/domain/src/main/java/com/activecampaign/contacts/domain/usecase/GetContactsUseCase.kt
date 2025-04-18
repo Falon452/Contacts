@@ -12,7 +12,7 @@ class GetContactsUseCase @Inject constructor(
     private val contactsRepository: ContactsRepository,
 ) {
 
-    suspend fun execute(): List<Contact> =
+    suspend fun execute(): Result<List<Contact>> =
         contactsRepository.getContacts(
             ordering = mapOf(
                 FIRST_NAME to DESCENDING,
