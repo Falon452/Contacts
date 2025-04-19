@@ -4,14 +4,17 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.activecampaign.contacs.presentation.di.DefaultDispatcher
+import com.activecampaign.contacs.presentation.ext.retryUntilSuccess
 import com.activecampaign.contacs.presentation.mapper.ContactsViewStateMapper
 import com.activecampaign.contacs.presentation.model.ContactsEvent
+import com.activecampaign.contacs.presentation.model.ContactsEvent.ShowToast
 import com.activecampaign.contacs.presentation.model.ContactsState
 import com.activecampaign.contacs.presentation.model.ContactsViewState
 import com.activecampaign.contacts.domain.usecase.GetContactsUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -32,6 +35,7 @@ class ContactsViewModel @Inject constructor(
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ContactsState(null))
+
     @VisibleForTesting
     val state get() = _state.value
     val viewState: StateFlow<ContactsViewState> =
@@ -49,15 +53,33 @@ class ContactsViewModel @Inject constructor(
 
     init {
         viewModelScope.launch(defaultDispatcher) {
-            getContactsUseCase.execute()
+            suspend { getContactsUseCase.execute() }
+                .retryUntilSuccess(
+                    maxAttempts = 5,
+                    onRetry = { _, exception ->
+                        _events.send(ShowToast(exception.message.orEmpty() + " Retrying..."))
+                        delay(REQUEST_DELAY_MS)
+                    },
+                )
                 .onSuccess { contacts ->
                     _state.update {
                         it.copy(contacts = contacts)
                     }
                 }
-                .onFailure { throwable ->
-                    _events.send(ContactsEvent.ShowToast(throwable.message.toString()))
+                .onFailure { exception ->
+                    _events.send(ShowToast(exception.message.orEmpty()))
                 }
         }
+    }
+
+    fun onEvent(event: ContactsEvent, showToast: (message: String) -> Unit) {
+        when (event) {
+            is ShowToast -> showToast(event.message)
+        }
+    }
+
+    private companion object {
+
+        const val REQUEST_DELAY_MS = 1000L
     }
 }

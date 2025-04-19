@@ -10,9 +10,14 @@ class ContactsViewStateMapper @Inject constructor(
 
     fun from(state: ContactsState): ContactsViewState = with(state) {
         ContactsViewState(
-            contacts = state.contacts?.map(contactItemMapper::from) ?: emptyList(),
+            contactItemRows = state.contacts?.map(contactItemMapper::from)?.chunked(COLUMNS_IN_ROW) ?: emptyList(),
             showSpinner = state.contacts == null,
             showListEmptyImage = state.contacts?.isEmpty() == true
         )
+    }
+
+    private companion object {
+
+        const val COLUMNS_IN_ROW = 2
     }
 }
