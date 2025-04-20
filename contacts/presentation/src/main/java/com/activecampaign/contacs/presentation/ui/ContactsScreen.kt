@@ -56,23 +56,46 @@ fun ContactsScreen(
         onRefresh = viewModel::onRefresh,
     ) {
         LazyColumn(
-            modifier = modifier.fillMaxSize(),
+            modifier = Modifier.fillMaxSize(),
             contentPadding = PaddingValues(8.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            items(state.contactItemRows) { row ->
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
-                    row.forEach { contactItem ->
-                        Box(
-                            modifier = Modifier
-                                .weight(1f)
-                                .wrapContentHeight(),
-                            contentAlignment = Alignment.Center
-                        ) {
-                            ContactCard(contactItem = contactItem)
+            if (state.contactItemRows.isEmpty()) {
+                items(50) { _ ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        repeat(2) { _ ->
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .wrapContentHeight(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ShimmerPlaceholder()
+                            }
+                        }
+                    }
+                }
+            } else {
+                items(state.contactItemRows) { row ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        row.forEachIndexed { ix, contactItem ->
+                            Box(
+                                modifier = Modifier
+                                    .weight(1f)
+                                    .wrapContentHeight(),
+                                contentAlignment = Alignment.Center
+                            ) {
+                                ContactCard(
+                                    contactItem = contactItem,
+                                    isRight = ix == 1,
+                                )
+                            }
                         }
                     }
                 }
