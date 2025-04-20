@@ -29,9 +29,9 @@ import javax.inject.Inject
 
 @HiltViewModel
 class ContactsViewModel @Inject constructor(
-    getContactsUseCase: GetContactsUseCase,
+    private val getContactsUseCase: GetContactsUseCase,
+    @DefaultDispatcher private val defaultDispatcher: CoroutineDispatcher,
     viewStateMapper: ContactsViewStateMapper,
-    @DefaultDispatcher defaultDispatcher: CoroutineDispatcher,
 ) : ViewModel() {
 
     private val _state = MutableStateFlow(ContactsState(null))
@@ -52,6 +52,10 @@ class ContactsViewModel @Inject constructor(
     val events: Flow<ContactsEvent> = _events.receiveAsFlow()
 
     init {
+        loadContacts()
+    }
+
+    private fun loadContacts() {
         viewModelScope.launch(defaultDispatcher) {
             suspend { getContactsUseCase.execute() }
                 .retryUntilSuccess(
@@ -76,6 +80,11 @@ class ContactsViewModel @Inject constructor(
         when (event) {
             is ShowToast -> showToast(event.message)
         }
+    }
+
+    fun onRefresh() {
+        _state.update { it.copy(contacts = null) }
+        loadContacts()
     }
 
     private companion object {
