@@ -4,7 +4,7 @@ import androidx.annotation.VisibleForTesting
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.activecampaign.contacs.presentation.di.DefaultDispatcher
-import com.activecampaign.contacs.presentation.ext.retryUntilSuccess
+import com.activecampaign.contacs.presentation.ext.executeWithRetry
 import com.activecampaign.contacs.presentation.mapper.ContactsViewStateMapper
 import com.activecampaign.contacs.presentation.model.ContactsEvent
 import com.activecampaign.contacs.presentation.model.ContactsEvent.ShowToast
@@ -34,7 +34,13 @@ class ContactsViewModel @Inject constructor(
     viewStateMapper: ContactsViewStateMapper,
 ) : ViewModel() {
 
-    private val _state = MutableStateFlow(ContactsState(null))
+    private val _state = MutableStateFlow(
+        ContactsState(
+            contacts = emptyList(),
+            failedToGetContacts = false,
+            isLoading = true,
+        )
+    )
 
     @VisibleForTesting
     val state get() = _state.value
@@ -57,21 +63,34 @@ class ContactsViewModel @Inject constructor(
 
     private fun loadContacts() {
         viewModelScope.launch(defaultDispatcher) {
-            suspend { getContactsUseCase.execute() }
-                .retryUntilSuccess(
-                    maxAttempts = 5,
-                    onRetry = { _, exception ->
-                        _events.send(ShowToast(exception.message.orEmpty() + " Retrying..."))
-                        delay(REQUEST_DELAY_MS)
-                    },
+            _state.update {
+                it.copy(
+                    isLoading = true,
+                    failedToGetContacts = false,
                 )
+            }
+            getContactsUseCase::execute.executeWithRetry(
+                maxAttempts = 5,
+                onRetry = { _, _ ->
+                    delay(REQUEST_DELAY_MS)
+                },
+            )
                 .onSuccess { contacts ->
                     _state.update {
-                        it.copy(contacts = contacts)
+                        it.copy(
+                            contacts = contacts,
+                            isLoading = false,
+                        )
                     }
                 }
                 .onFailure { exception ->
                     _events.send(ShowToast(exception.message.orEmpty()))
+                    _state.update {
+                        it.copy(
+                            failedToGetContacts = true,
+                            isLoading = false,
+                        )
+                    }
                 }
         }
     }
@@ -83,7 +102,6 @@ class ContactsViewModel @Inject constructor(
     }
 
     fun onRefresh() {
-        _state.update { it.copy(contacts = null) }
         loadContacts()
     }
 

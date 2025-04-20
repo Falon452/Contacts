@@ -1,15 +1,7 @@
 package com.activecampaign.contacs.presentation.ui
 
 import android.widget.Toast
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
@@ -17,15 +9,19 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
+import com.activecampaign.contacs.presentation.R
+import com.activecampaign.contacs.presentation.model.ContactsContent.CONTACTS
+import com.activecampaign.contacs.presentation.model.ContactsContent.EMPTY_CONTACTS
+import com.activecampaign.contacs.presentation.model.ContactsContent.ERROR_GETTING_CONTACTS
 import com.activecampaign.contacs.presentation.viewmodel.ContactsViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -52,53 +48,25 @@ fun ContactsScreen(
     PullToRefreshBox(
         modifier = modifier,
         state = pullToRefreshState,
-        isRefreshing = state.showSpinner,
+        isRefreshing = state.isSpinnerVisible,
         onRefresh = viewModel::onRefresh,
     ) {
-        LazyColumn(
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(8.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
-        ) {
-            if (state.contactItemRows.isEmpty()) {
-                items(50) { _ ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        repeat(2) { _ ->
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .wrapContentHeight(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                ShimmerPlaceholder()
-                            }
-                        }
-                    }
-                }
-            } else {
-                items(state.contactItemRows) { row ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.spacedBy(8.dp)
-                    ) {
-                        row.forEachIndexed { ix, contactItem ->
-                            Box(
-                                modifier = Modifier
-                                    .weight(1f)
-                                    .wrapContentHeight(),
-                                contentAlignment = Alignment.Center
-                            ) {
-                                ContactCard(
-                                    contactItem = contactItem,
-                                    isRight = ix == 1,
-                                )
-                            }
-                        }
-                    }
-                }
+        AnimatedContent(state.contactsContent) { content ->
+            when (content) {
+                CONTACTS ->
+                    ContactsContent(state)
+                EMPTY_CONTACTS ->
+                    ErrorState(
+                        onRefresh = viewModel::onRefresh,
+                        painter = painterResource(R.drawable.search),
+                        reasonText = stringResource(R.string.no_results),
+                    )
+                ERROR_GETTING_CONTACTS ->
+                    ErrorState(
+                        onRefresh = viewModel::onRefresh,
+                        painter = painterResource(R.drawable.no_wifi_icon),
+                        reasonText = stringResource(R.string.something_went_wrong),
+                    )
             }
         }
     }

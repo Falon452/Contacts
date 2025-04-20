@@ -1,5 +1,6 @@
 package com.activecampaign.contacts.data.mapper
 
+import android.util.Log
 import com.activecampaign.contacts.data.models.ContactResponse
 import com.activecampaign.contacts.domain.model.Contact
 import javax.inject.Inject
@@ -22,7 +23,15 @@ internal class ContactMapper @Inject constructor() {
                         email = email,
                     )
                 }
-                else -> null
+                else -> {
+                    Log.w(TAG, "Skipping contact: $contactResponse")
+                    null
+                }
             }
         }
+
+    private companion object {
+
+        const val TAG = "ContactMapper"
+    }
 }

@@ -1,6 +1,8 @@
 package com.activecampaign.contacs.presentation.ext
 
-internal suspend inline fun <T> (suspend () -> Result<T>).retryUntilSuccess(
+internal typealias SuspendedResultBlock<T> = suspend () -> Result<T>
+
+internal suspend inline fun <T> SuspendedResultBlock<T>.executeWithRetry(
     maxAttempts: Int,
     noinline onRetry: suspend (attempt: Int, exception: Throwable) -> Unit,
 ): Result<T> {

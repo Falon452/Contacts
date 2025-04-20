@@ -3,5 +3,7 @@ package com.activecampaign.contacs.presentation.model
 import com.activecampaign.contacts.domain.model.Contact
 
 data class ContactsState(
-    val contacts: List<Contact>?,
+    val contacts: List<Contact>,
+    val isLoading: Boolean,
+    val failedToGetContacts: Boolean,
 )
