@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/contacts/data" />
             <option value="$PROJECT_DIR$/contacts/domain" />
             <option value="$PROJECT_DIR$/contacts/presentation" />
+            <option value="$PROJECT_DIR$/theme" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />

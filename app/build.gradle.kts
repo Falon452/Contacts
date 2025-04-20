@@ -45,6 +45,7 @@ dependencies {
     implementation(project(":contacts:data"))
     implementation(project(":contacts:domain"))
     implementation(project(":contacts:presentation"))
+    implementation(project(":theme"))
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
