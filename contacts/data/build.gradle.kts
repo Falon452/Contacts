@@ -15,7 +15,11 @@ val localProperties = Properties().apply {
     }
 }
 
-val apiKey: String = localProperties.getProperty("API_KEY") ?: throw IllegalStateException("Set API_KEY in local.properties")
+val apiKey: String = System.getenv("ACTIVE_CAMPAIGN_API_KEY")
+    ?: localProperties.getProperty("ACTIVE_CAMPAIGN_API_KEY")
+    ?: throw IllegalStateException(
+        "ACTIVE_CAMPAIGN_API_KEY not found. Set it in environment variables or local.properties"
+    )
 
 android {
     namespace = "com.activecampaign.contacts.data"
