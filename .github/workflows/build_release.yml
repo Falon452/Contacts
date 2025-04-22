@@ -34,6 +34,20 @@ jobs:
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
+      - name: List All Built Files
+        run: |
+          echo "=== APK Files ==="
+          find app/build/outputs/apk -type f -print
+          echo "=== AAB Files ==="
+          find app/build/outputs/bundle -type f -print
+          echo "=== Mapping Files ==="
+          find app/build/outputs/mapping -type f -print
+
+      - name: Verify APK Signature
+        run: |
+          apksigner verify --print-certs app/build/outputs/apk/release/app-release.apk || (echo "APK verification failed" && exit 1)
+          echo "APK signed successfully"
+
       - name: Upload Artifacts
         uses: actions/upload-artifact@v4
         with:
