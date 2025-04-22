@@ -38,10 +38,6 @@ jobs:
         run: |
           echo "=== APK Files ==="
           find app/build/outputs/apk -type f -print
-          echo "=== AAB Files ==="
-          find app/build/outputs/bundle -type f -print
-          echo "=== Mapping Files ==="
-          find app/build/outputs/mapping -type f -print
 
       - name: Verify APK Signature
         run: |
