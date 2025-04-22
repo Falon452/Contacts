@@ -87,6 +87,7 @@ class ContactsViewModel @Inject constructor(
                     _events.send(ShowToast(exception.message.orEmpty()))
                     _state.update {
                         it.copy(
+                            contacts = emptyList(),
                             failedToGetContacts = true,
                             isLoading = false,
                         )

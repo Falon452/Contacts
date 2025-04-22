@@ -76,6 +76,7 @@ class ContactsViewModelTest {
         advanceUntilIdle()
 
         assertTrue(viewModel.state.failedToGetContacts)
+        assertTrue(viewModel.state.contacts.isEmpty())
         assertFalse(viewModel.state.isLoading)
         assertTrue(events.contains(ShowToast(message)))
         job.cancel()
