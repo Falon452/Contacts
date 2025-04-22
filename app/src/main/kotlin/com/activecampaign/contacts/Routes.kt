@@ -1,6 +1,6 @@
 package com.activecampaign.contacts
 
-object Routes {
+internal object Routes {
 
     const val CONTACTS = "contacts"
 }

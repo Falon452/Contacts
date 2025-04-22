@@ -23,7 +23,7 @@ import androidx.compose.ui.res.vectorResource
 import com.activecampaign.contacts.R
 
 @Composable
-fun LogoInBackground(
+internal fun LogoInBackground(
     modifier: Modifier = Modifier,
 ) {
     val transition = rememberInfiniteTransition()
@@ -38,12 +38,12 @@ fun LogoInBackground(
             repeatMode = RepeatMode.Restart
         )
     )
+    val activeCampaignColor = Color(0xFF004CFF)
     val shimmerColors = listOf(
-        Color(0xFF004CFF).copy(alpha = 1f),
-        Color(0xFF004CFF).copy(alpha = 0.4f),
-        Color(0xFF004CFF).copy(alpha = 1f),
+        activeCampaignColor.copy(alpha = 1f),
+        activeCampaignColor.copy(alpha = 0.4f),
+        activeCampaignColor.copy(alpha = 1f),
     )
-
     val brush = Brush.linearGradient(
         colors = shimmerColors,
         start = Offset(translateAnim.value - 500, translateAnim.value - 500),

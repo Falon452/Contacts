@@ -1,5 +1,5 @@
 package com.activecampaign.contacts.model
 
-data class MainState(
+internal data class MainState(
     val isDarkMode: Boolean,
 )
