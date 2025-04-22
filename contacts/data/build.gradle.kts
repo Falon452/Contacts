@@ -1,3 +1,4 @@
+import org.gradle.kotlin.dsl.kotlin
 import java.util.Properties
 
 plugins {
@@ -27,7 +28,6 @@ android {
     defaultConfig {
         minSdk = 24
 
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
 
         buildConfigField("String", "API_KEY", "\"$apiKey\"")
@@ -51,6 +51,10 @@ android {
     }
 }
 
+tasks.withType<Test>().configureEach {
+    useJUnitPlatform()
+}
+
 dependencies {
     implementation(project(":contacts:domain"))
     implementation(libs.retrofit)
@@ -61,7 +65,10 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
-    testImplementation(libs.junit)
-    androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
+    testImplementation(libs.junit5.api)
+    testImplementation(libs.junit5.params)
+    testRuntimeOnly(libs.junit5.engine)
+    testImplementation(libs.mockk)
+    testImplementation(libs.coroutines.test)
+    testImplementation(libs.kotlin.test)
 }

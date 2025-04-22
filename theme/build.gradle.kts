@@ -12,7 +12,7 @@ tasks.withType<Test> {
 
 android {
     compileSdk = 35
-    namespace = "com.falon.theme"
+    namespace = "com.activecampaign.theme"
 
     defaultConfig {
         minSdk = 24

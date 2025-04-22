@@ -1,0 +1,95 @@
+package com.activecampaign.contacts.data.models
+
+import com.google.gson.annotations.SerializedName
+
+internal data class GetContactsResponse(
+    @SerializedName("scoreValues") val scoreValues: List<Any>? = null,
+    @SerializedName("contacts") val contacts: List<ContactResponse>? = null,
+    @SerializedName("meta") val meta: Meta? = null,
+)
+
+internal data class ContactResponse(
+    @SerializedName("cdate") val cdate: String? = null,
+    @SerializedName("email") val email: String? = null,
+    @SerializedName("phone") val phone: String? = null,
+    @SerializedName("firstName") val firstName: String? = null,
+    @SerializedName("lastName") val lastName: String? = null,
+    @SerializedName("orgid") val orgId: String? = null,
+    @SerializedName("orgname") val orgName: String? = null,
+    @SerializedName("segmentio_id") val segmentioId: String? = null,
+    @SerializedName("bounced_hard") val bouncedHard: String? = null,
+    @SerializedName("bounced_soft") val bouncedSoft: String? = null,
+    @SerializedName("bounced_date") val bouncedDate: String? = null,
+    @SerializedName("ip") val ip: String? = null,
+    @SerializedName("ua") val userAgent: String? = null,
+    @SerializedName("hash") val hash: String? = null,
+    @SerializedName("socialdata_lastcheck") val socialDataLastCheck: String? = null,
+    @SerializedName("email_local") val emailLocal: String? = null,
+    @SerializedName("email_domain") val emailDomain: String? = null,
+    @SerializedName("sentcnt") val sentCount: String? = null,
+    @SerializedName("rating_tstamp") val ratingTimestamp: String? = null,
+    @SerializedName("gravatar") val gravatar: String? = null,
+    @SerializedName("deleted") val deleted: String? = null,
+    @SerializedName("anonymized") val anonymized: String? = null,
+    @SerializedName("adate") val adate: String? = null,
+    @SerializedName("udate") val udate: String? = null,
+    @SerializedName("edate") val edate: String? = null,
+    @SerializedName("deleted_at") val deletedAt: String? = null,
+    @SerializedName("created_utc_timestamp") val createdUtcTimestamp: String? = null,
+    @SerializedName("updated_utc_timestamp") val updatedUtcTimestamp: String? = null,
+    @SerializedName("created_timestamp") val createdTimestamp: String? = null,
+    @SerializedName("updated_timestamp") val updatedTimestamp: String? = null,
+    @SerializedName("created_by") val createdBy: String? = null,
+    @SerializedName("updated_by") val updatedBy: String? = null,
+    @SerializedName("mpp_tracking") val mppTracking: String? = null,
+    @SerializedName("last_click_date") val lastClickDate: String? = null,
+    @SerializedName("last_open_date") val lastOpenDate: String? = null,
+    @SerializedName("last_mpp_open_date") val lastMppOpenDate: String? = null,
+    @SerializedName("best_send_hour") val bestSendHour: String? = null,
+    @SerializedName("scoreValues") val scoreValues: List<Any>? = null,
+    @SerializedName("accountContacts") val accountContacts: List<Any>? = null,
+    @SerializedName("links") val links: ContactLinks? = null,
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("organization") val organization: Any? = null,
+)
+
+internal data class ContactLinks(
+    @SerializedName("bounceLogs") val bounceLogs: String? = null,
+    @SerializedName("contactAutomations") val contactAutomations: String? = null,
+    @SerializedName("contactData") val contactData: String? = null,
+    @SerializedName("contactGoals") val contactGoals: String? = null,
+    @SerializedName("contactLists") val contactLists: String? = null,
+    @SerializedName("contactLogs") val contactLogs: String? = null,
+    @SerializedName("contactTags") val contactTags: String? = null,
+    @SerializedName("contactDeals") val contactDeals: String? = null,
+    @SerializedName("deals") val deals: String? = null,
+    @SerializedName("fieldValues") val fieldValues: String? = null,
+    @SerializedName("geoIps") val geoIps: String? = null,
+    @SerializedName("notes") val notes: String? = null,
+    @SerializedName("organization") val organization: String? = null,
+    @SerializedName("plusAppend") val plusAppend: String? = null,
+    @SerializedName("trackingLogs") val trackingLogs: String? = null,
+    @SerializedName("scoreValues") val scoreValues: String? = null,
+    @SerializedName("accountContacts") val accountContacts: String? = null,
+    @SerializedName("automationEntryCounts") val automationEntryCounts: String? = null,
+)
+
+internal data class Meta(
+    @SerializedName("page_input") val pageInput: PageInput? = null,
+)
+
+internal data class PageInput(
+    @SerializedName("segmentid") val segmentId: Int? = null,
+    @SerializedName("formid") val formId: Int? = null,
+    @SerializedName("listid") val listId: Int? = null,
+    @SerializedName("tagid") val tagId: Int? = null,
+    @SerializedName("limit") val limit: Int? = null,
+    @SerializedName("offset") val offset: Int? = null,
+    @SerializedName("search") val search: String? = null,
+    @SerializedName("sort") val sort: String? = null,
+    @SerializedName("seriesid") val seriesId: Int? = null,
+    @SerializedName("waitid") val waitId: Int? = null,
+    @SerializedName("status") val status: Int? = null,
+    @SerializedName("forceQuery") val forceQuery: Int? = null,
+    @SerializedName("cacheid") val cacheId: String? = null,
+)

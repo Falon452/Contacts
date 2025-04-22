@@ -1,6 +1,6 @@
-package com.falon.theme.viewmodel
+package com.activecampaign.theme.viewmodel
 
-import com.falon.theme.ThemePreferences
+import com.activecampaign.theme.ThemePreferences
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.CoroutineDispatcher
