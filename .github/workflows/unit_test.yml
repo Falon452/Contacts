@@ -29,6 +29,6 @@ jobs:
         run: |
           ./gradlew :app:testDebugUnitTest
           ./gradlew :contacts:presentation:testDebugUnitTest
-          ./gradlew :contacts:domain:testDebugUnitTest
+          ./gradlew :contacts:domain:test
           ./gradlew :contacts:data:testDebugUnitTest
           ./gradlew :theme:testDebugUnitTest
