@@ -30,6 +30,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.activecampaign.contacs.presentation.R
+import com.activecampaign.theme.ui.AppTheme
 
 @Composable
 fun ErrorState(
@@ -105,13 +106,15 @@ fun ErrorState(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ErrorStatePreview() {
-    ErrorState(
-        modifier = Modifier,
-        onRefresh = {},
-        painter = painterResource(R.drawable.search),
-        reasonText = stringResource(R.string.no_results),
-    )
+    AppTheme {
+        ErrorState(
+            modifier = Modifier,
+            onRefresh = {},
+            painter = painterResource(R.drawable.search),
+            reasonText = stringResource(R.string.no_results),
+        )
+    }
 }

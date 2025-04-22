@@ -1,6 +1,6 @@
 package com.activecampaign.contacs.presentation.mapper
 
-import com.activecampaign.contacs.presentation.model.ContactsContent
+import com.activecampaign.contacs.presentation.model.ContactsContentState
 import com.activecampaign.contacs.presentation.model.ContactsState
 import com.activecampaign.contacs.presentation.model.ContactsViewState
 import com.activecampaign.contacs.presentation.model.ContactItem
@@ -27,7 +27,7 @@ class ContactsViewStateMapperTest {
         val expectedViewState = ContactsViewState(
             isSpinnerVisible = true,
             contactItemRows = listOf(),
-            contactsContent = ContactsContent.CONTACTS
+            contactsContentState = ContactsContentState.CONTACTS
         )
         assertEquals(expectedViewState, viewState)
     }
@@ -45,7 +45,7 @@ class ContactsViewStateMapperTest {
         val expectedViewState = ContactsViewState(
             isSpinnerVisible = false,
             contactItemRows = listOf(),
-            contactsContent = ContactsContent.ERROR_GETTING_CONTACTS
+            contactsContentState = ContactsContentState.ERROR_GETTING_CONTACTS
         )
         assertEquals(expectedViewState, viewState)
     }
@@ -63,7 +63,7 @@ class ContactsViewStateMapperTest {
         val expectedViewState = ContactsViewState(
             isSpinnerVisible = false,
             contactItemRows = listOf(),
-            contactsContent = ContactsContent.EMPTY_CONTACTS
+            contactsContentState = ContactsContentState.EMPTY_CONTACTS
         )
         assertEquals(expectedViewState, viewState)
     }
@@ -101,7 +101,7 @@ class ContactsViewStateMapperTest {
         val expectedViewState = ContactsViewState(
             isSpinnerVisible = false,
             contactItemRows = expectedContactItemRows,
-            contactsContent = ContactsContent.CONTACTS
+            contactsContentState = ContactsContentState.CONTACTS
         )
 
         assertEquals(expectedViewState, viewState)
@@ -136,7 +136,7 @@ class ContactsViewStateMapperTest {
         val expectedViewState = ContactsViewState(
             isSpinnerVisible = false,
             contactItemRows = expectedContactItemRows,
-            contactsContent = ContactsContent.CONTACTS
+            contactsContentState = ContactsContentState.CONTACTS
         )
 
         assertEquals(expectedViewState, viewState)

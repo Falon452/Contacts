@@ -24,8 +24,8 @@ import androidx.navigation.compose.rememberNavController
 import com.activecampaign.contacs.presentation.ui.ContactsScreen
 import com.activecampaign.contacts.ui.LogoInBackground
 import com.activecampaign.contacts.util.expandAndFadeAnimationRun
-import com.activecampaign.contacts.viewmodel.MainViewModel
 import com.activecampaign.theme.ui.AppTheme
+import com.activecampaign.theme.viewmodel.ThemeViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -37,17 +37,19 @@ internal class MainActivity : ComponentActivity() {
         setupSplashScreen()
         enableEdgeToEdge()
         setContent {
-            AppTheme {
-                val mainViewModel = hiltViewModel<MainViewModel>()
-                val mainState = mainViewModel.state.collectAsStateWithLifecycle()
+            val themeViewModel = hiltViewModel<ThemeViewModel>()
+            val isDarkTheme = themeViewModel.isDarkTheme.collectAsStateWithLifecycle()
+            AppTheme(
+                isDarkTheme = isDarkTheme.value
+            ) {
                 Scaffold(
                     topBar = {
                         TopAppBar(
                             title = { Text(stringResource(R.string.app_name)) },
                             actions = {
                                 Switch(
-                                    checked = mainState.value.isDarkMode,
-                                    onCheckedChange = mainViewModel::onToggleTheme
+                                    checked = isDarkTheme.value,
+                                    onCheckedChange = themeViewModel::onToggleTheme
                                 )
                                 Spacer(modifier = Modifier.width(4.dp))
                             }

@@ -44,6 +44,7 @@ tasks.withType<Test> {
 
 dependencies {
     implementation(project(":contacts:domain"))
+    implementation(project(":theme"))
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     implementation(libs.hilt.navigation.compose)

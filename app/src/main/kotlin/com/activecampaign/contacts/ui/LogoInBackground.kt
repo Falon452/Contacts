@@ -20,7 +20,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.tooling.preview.Preview
 import com.activecampaign.contacts.R
+import com.activecampaign.theme.ui.AppTheme
 
 @Composable
 internal fun LogoInBackground(
@@ -66,5 +68,13 @@ internal fun LogoInBackground(
             imageVector = ImageVector.vectorResource(R.drawable.ac_logo),
             contentDescription = null,
         )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DarkLogoInBackground() {
+    AppTheme {
+        LogoInBackground()
     }
 }

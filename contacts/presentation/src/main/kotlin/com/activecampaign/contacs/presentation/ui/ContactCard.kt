@@ -31,14 +31,16 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.activecampaign.contacs.presentation.model.ContactItem
+import com.activecampaign.theme.ui.AppTheme
 
 @Composable
 fun ContactCard(
     contactItem: ContactItem,
-    modifier: Modifier = Modifier,
     isRight: Boolean,
+    modifier: Modifier = Modifier,
 ) {
     var expandText by rememberSaveable { mutableStateOf(false) }
     val transition = updateTransition(expandText, label = "transition")
@@ -82,7 +84,9 @@ fun ContactCard(
 
 
     Card(
-        modifier = modifier.rotate(rotate).scale(scale),
+        modifier = modifier
+            .rotate(rotate)
+            .scale(scale),
         shape = RoundedCornerShape(12.dp),
         colors = CardDefaults.cardColors(
             containerColor = Color.Transparent,
@@ -118,5 +122,13 @@ fun ContactCard(
                 modifier = Modifier.animateContentSize()
             )
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun DarkLogoInBackground() {
+    AppTheme {
+        ContactCard(ContactItem("preview-id", "contact@gmail.com"), isRight = false)
     }
 }

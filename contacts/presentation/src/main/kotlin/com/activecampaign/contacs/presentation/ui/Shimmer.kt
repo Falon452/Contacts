@@ -22,6 +22,7 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.activecampaign.theme.ui.AppTheme
 
 @Composable
 fun ShimmerPlaceholder(
@@ -69,8 +70,10 @@ fun ShimmerPlaceholder(
     }
 }
 
-@Preview
+@Preview(showBackground = true)
 @Composable
 fun ShimmerPlaceholderPreview() {
-    ShimmerPlaceholder()
+    AppTheme {
+        ShimmerPlaceholder()
+    }
 }

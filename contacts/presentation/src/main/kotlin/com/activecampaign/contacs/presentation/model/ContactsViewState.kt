@@ -2,11 +2,11 @@ package com.activecampaign.contacs.presentation.model
 
 data class ContactsViewState(
     val contactItemRows: List<List<ContactItem>>,
-    val contactsContent: ContactsContent,
+    val contactsContentState: ContactsContentState,
     val isSpinnerVisible: Boolean,
 )
 
-enum class ContactsContent {
+enum class ContactsContentState {
     CONTACTS,
     EMPTY_CONTACTS,
     ERROR_GETTING_CONTACTS,
