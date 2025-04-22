@@ -28,7 +28,6 @@ jobs:
       - name: Run Unit Tests (All Modules)
         run: |
           ./gradlew :app:testDebugUnitTest
-          ./gradlew :contacts:testDebugUnitTest
           ./gradlew :contacts:presentation:testDebugUnitTest
           ./gradlew :contacts:domain:testDebugUnitTest
           ./gradlew :contacts:data:testDebugUnitTest
