@@ -10,7 +10,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
     env:
-      API_KEY: ${{ secrets.ACTIVE_CAMPAIGN_API_KEY }}
+      ACTIVE_CAMPAIGN_API_KEY: ${{ secrets.ACTIVE_CAMPAIGN_API_KEY }}
 
     steps:
       - uses: actions/checkout@v4
