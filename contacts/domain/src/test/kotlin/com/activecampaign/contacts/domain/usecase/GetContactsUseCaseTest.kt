@@ -1,7 +1,7 @@
 package com.activecampaign.contacts.domain.usecase
 
 import com.activecampaign.contacts.domain.model.Contact
-import com.activecampaign.contacts.domain.model.ContactField
+import com.activecampaign.contacts.domain.model.ContactOrdering
 import com.activecampaign.contacts.domain.model.Order
 import com.activecampaign.contacts.domain.repository.ContactsRepository
 import io.mockk.coEvery
@@ -26,9 +26,7 @@ class GetContactsUseCaseTest {
         coEvery {
             mockContactsRepository.getContacts(
                 ordering = mapOf(
-                    ContactField.FIRST_NAME to Order.DESCENDING,
-                    ContactField.LAST_NAME to Order.DESCENDING,
-                    ContactField.EMAIL to Order.DESCENDING
+                    ContactOrdering.NAME to Order.DESCENDING,
                 ),
                 limit = 50
             )
@@ -47,9 +45,7 @@ class GetContactsUseCaseTest {
         coEvery {
             mockContactsRepository.getContacts(
                 ordering = mapOf(
-                    ContactField.FIRST_NAME to Order.DESCENDING,
-                    ContactField.LAST_NAME to Order.DESCENDING,
-                    ContactField.EMAIL to Order.DESCENDING
+                    ContactOrdering.NAME to Order.DESCENDING,
                 ),
                 limit = 50
             )
@@ -59,5 +55,32 @@ class GetContactsUseCaseTest {
 
         assertTrue(result.isFailure)
         assertEquals(exception, result.exceptionOrNull())
+    }
+
+    @Test
+    fun `WHEN execute is called, THEN contacts are returned with FullNameContacts first in expected order`() = runTest {
+        val inputContacts = listOf(
+            Contact.FullNameContact(id = "3", firstName = "Zoe", lastName = "Zimmer"),
+            Contact.EmailContact(id = "4", email = "yvette@example.com"),
+            Contact.FullNameContact(id = "1", firstName = "Alice", lastName = "Anderson"),
+            Contact.EmailContact(id = "2", email = "bob@example.com")
+        )
+        coEvery {
+            mockContactsRepository.getContacts(
+                ordering = mapOf(ContactOrdering.NAME to Order.DESCENDING),
+                limit = 50
+            )
+        } returns Result.success(inputContacts)
+
+        val result = getContactsUseCase.execute()
+
+        val expectedOrder = listOf(
+            Contact.FullNameContact(id = "3", firstName = "Zoe", lastName = "Zimmer"),
+            Contact.FullNameContact(id = "1", firstName = "Alice", lastName = "Anderson"),
+            Contact.EmailContact(id = "4", email = "yvette@example.com"),
+            Contact.EmailContact(id = "2", email = "bob@example.com")
+        )
+        assertTrue(result.isSuccess)
+        assertEquals(expectedOrder, result.getOrNull())
     }
 }

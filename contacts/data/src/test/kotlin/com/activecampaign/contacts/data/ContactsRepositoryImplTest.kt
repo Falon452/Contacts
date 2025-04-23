@@ -6,7 +6,7 @@ import com.activecampaign.contacts.data.mapper.DataOrderingMapper
 import com.activecampaign.contacts.data.models.ContactResponse
 import com.activecampaign.contacts.data.models.GetContactsResponse
 import com.activecampaign.contacts.domain.model.Contact
-import com.activecampaign.contacts.domain.model.ContactField
+import com.activecampaign.contacts.domain.model.ContactOrdering
 import com.activecampaign.contacts.domain.model.Order
 import com.activecampaign.contacts.domain.repository.ContactsRepository
 import io.mockk.*
@@ -46,8 +46,8 @@ class ContactsRepositoryImplTest {
     @Test
     fun `WHEN getContacts is called with valid parameters and ASC ordering, THEN it returns a list of contacts in ascending order`() = runTest {
         val limit = 5
-        val ordering = mapOf(ContactField.FIRST_NAME to Order.ASCENDING)
-        val requestOrdering = mapOf("first_name" to "ASC")
+        val ordering = mapOf(ContactOrdering.NAME to Order.ASCENDING)
+        val requestOrdering = mapOf("name" to "ASC")
         val mockResponse = mockk<GetContactsResponse>()
         val mockContactResponse = mockk<ContactResponse>()
         val mockContact = mockk<Contact>()
@@ -66,8 +66,8 @@ class ContactsRepositoryImplTest {
     @Test
     fun `WHEN getContacts is called with valid parameters and DESC ordering, THEN it returns a list of contacts in descending order`() = runTest {
         val limit = 5
-        val ordering = mapOf(ContactField.LAST_NAME to Order.DESCENDING)
-        val requestOrdering = mapOf("last_name" to "DESC")
+        val ordering = mapOf(ContactOrdering.NAME to Order.DESCENDING)
+        val requestOrdering = mapOf("name" to "DESC")
         val mockResponse = mockk<GetContactsResponse>()
         val mockContactResponse = mockk<ContactResponse>()
         val mockContact = mockk<Contact>()
@@ -86,9 +86,9 @@ class ContactsRepositoryImplTest {
     @Test
     fun `WHEN getContacts is called and API returns null contacts, THEN it returns an empty list`() = runTest {
         val limit = 5
-        val ordering = mapOf(ContactField.FIRST_NAME to Order.ASCENDING)
+        val ordering = mapOf(ContactOrdering.NAME to Order.ASCENDING)
         val mockResponse = mockk<GetContactsResponse>(relaxed = true)
-        val requestOrdering = mapOf("last_name" to "DESC")
+        val requestOrdering = mapOf("name" to "ASC")
 
         every { mockDataOrderingMapper.from(ordering) } returns requestOrdering
         coEvery { mockContactsApi.getContacts(limit = limit, any()) } returns mockResponse
@@ -103,8 +103,8 @@ class ContactsRepositoryImplTest {
     @Test
     fun `WHEN getContacts is called and API throws an exception, THEN it returns a failure`() = runTest {
         val limit = 5
-        val ordering = mapOf(ContactField.FIRST_NAME to Order.ASCENDING)
-        val requestOrdering = mapOf("last_name" to "DESC")
+        val ordering = mapOf(ContactOrdering.NAME to Order.ASCENDING)
+        val requestOrdering = mapOf("name" to "ASC")
         val exception = Exception("API error")
 
         every { mockDataOrderingMapper.from(ordering) } returns requestOrdering
@@ -119,8 +119,8 @@ class ContactsRepositoryImplTest {
     @Test
     fun `WHEN getContacts is called and contacts contains null elements, THEN it maps only non-null contacts`() = runTest {
         val limit = 12
-        val ordering = mapOf(ContactField.FIRST_NAME to Order.ASCENDING)
-        val requestOrdering = mapOf("first_name" to "ASC")
+        val ordering = mapOf(ContactOrdering.NAME to Order.ASCENDING)
+        val requestOrdering = mapOf("name" to "ASC")
 
         val mockResponse = mockk<GetContactsResponse>()
         val mockContactResponse1 = mockk<ContactResponse>()

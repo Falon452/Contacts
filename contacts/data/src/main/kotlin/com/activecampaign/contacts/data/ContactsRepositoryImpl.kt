@@ -5,7 +5,7 @@ import com.activecampaign.contacts.data.di.IoDispatcher
 import com.activecampaign.contacts.data.mapper.ContactMapper
 import com.activecampaign.contacts.data.mapper.DataOrderingMapper
 import com.activecampaign.contacts.domain.model.Contact
-import com.activecampaign.contacts.domain.model.ContactField
+import com.activecampaign.contacts.domain.model.ContactOrdering
 import com.activecampaign.contacts.domain.model.Order
 import com.activecampaign.contacts.domain.repository.ContactsRepository
 import kotlinx.coroutines.CoroutineDispatcher
@@ -21,7 +21,7 @@ internal class ContactsRepositoryImpl @Inject constructor(
 
     override suspend fun getContacts(
         limit: Int,
-        ordering: Map<ContactField, Order>
+        ordering: Map<ContactOrdering, Order>
     ): Result<List<Contact>> =
         withContext(ioDispatcher) {
             runCatching {

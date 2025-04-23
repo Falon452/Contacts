@@ -1,21 +1,20 @@
 package com.activecampaign.contacts.data.mapper
 
-import com.activecampaign.contacts.domain.model.ContactField
+import com.activecampaign.contacts.domain.model.ContactOrdering
 import com.activecampaign.contacts.domain.model.Order
 import javax.inject.Inject
 
 internal class DataOrderingMapper @Inject constructor() {
 
-    fun from(ordering: Map<ContactField, Order>): Map<String, String> =
+    fun from(ordering: Map<ContactOrdering, Order>): Map<String, String> =
         ordering.map { (field, order) -> field.toData() to order.toData() }.toMap()
 
-    private fun ContactField.toData(): String {
+    private fun ContactOrdering.toData(): String {
         val field = when (this) {
-            ContactField.FIRST_NAME -> "firstName"
-            ContactField.LAST_NAME -> "lastName"
-            ContactField.EMAIL -> "email"
+            ContactOrdering.NAME -> "name"
+            ContactOrdering.EMAIL -> "email"
         }
-        return "order[$field]"
+        return "orders[$field]"
     }
 
     private fun Order.toData() =
