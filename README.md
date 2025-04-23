@@ -6,6 +6,12 @@
 
 [![Custom Frame](https://img.youtube.com/vi/jNcroWeECBE/0.jpg)](https://youtube.com/shorts/jNcroWeECBE)
 
+## Installation
+1. Use **JDK 17**.
+2. 🗝️ Add your API key to `local.properties`:
+   ```properties
+   ACTIVE_CAMPAIGN_API_KEY=your_api_key_here
+
 ## Requirements
 
 - Display a list of contacts in a table ✅
