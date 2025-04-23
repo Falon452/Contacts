@@ -12,6 +12,8 @@
    ```properties
    ACTIVE_CAMPAIGN_API_KEY=your_api_key_here
 
+or download apk from [drive](https://drive.google.com/file/d/1XDQshW3RzGuuGYk7joBTzaXbxaxISFzZ/view?usp=sharing)
+
 ## Requirements
 
 - Display a list of contacts in a table ✅
