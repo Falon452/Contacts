@@ -28,7 +28,9 @@ or download apk from [drive](https://drive.google.com/file/d/1XDQshW3RzGuuGYk7jo
 ## 🧱 Presentation Architecture – MVI
 ![image](https://github.com/user-attachments/assets/534b699c-1767-452d-bd89-ffd9738c7d7e)
 
-This project demonstrates a clean and modern MVI (Model–View–Intent) architecture in Android.
+The project is structured using a **multi-module, feature-based architecture**.
+
+It follows the **MVI (Model–View–Intent)** pattern for the presentation layer, promoting unidirectional data flow and clear state management.
 
 ## Additional Features
 
