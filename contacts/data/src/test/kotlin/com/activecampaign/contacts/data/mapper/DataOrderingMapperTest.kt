@@ -15,7 +15,7 @@ class DataOrderingMapperTest {
 
         val result = mapper.from(input)
 
-        val expected = mapOf("order[name]" to "ASC")
+        val expected = mapOf("orders[name]" to "ASC")
         assertEquals(expected, result)
     }
 
@@ -29,8 +29,8 @@ class DataOrderingMapperTest {
         val result = mapper.from(input)
 
         val expected = mapOf(
-            "order[name]" to "ASC",
-            "order[email]" to "DESC"
+            "orders[name]" to "ASC",
+            "orders[email]" to "DESC"
         )
         assertEquals(expected, result)
     }
